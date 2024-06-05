@@ -9,9 +9,7 @@ type ProductProps = {
   handler: () => void;
 };
 
-const server = "any";
-
-const productCard = ({
+const ProductCard = ({
   productID,
   price,
   name,
@@ -21,7 +19,7 @@ const productCard = ({
 }: ProductProps) => {
   return (
     <div className="pcard">
-      <img src={`${server} / ${photo}`} alt={name} />
+      <img src={photo} alt={name} />
       <p>{name}</p>
       <span>₹ {price}</span>
 
@@ -34,4 +32,4 @@ const productCard = ({
   );
 };
 
-export default productCard;
+export default ProductCard;
