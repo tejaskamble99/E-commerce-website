@@ -1,4 +1,4 @@
-import { FaPlus } from "react-icons/fa";
+ import { FaPlus } from "react-icons/fa";
 
 type ProductProps = {
   productID: string;
@@ -9,7 +9,9 @@ type ProductProps = {
   handler: () => void;
 };
 
-const ProductCard = ({
+const server = "any";
+
+const productCard = ({
   productID,
   price,
   name,
@@ -19,7 +21,7 @@ const ProductCard = ({
 }: ProductProps) => {
   return (
     <div className="pcard">
-      <img src={photo} alt={name} />
+      <img src={`${server} / ${photo}`} alt={name} />
       <p>{name}</p>
       <span>₹ {price}</span>
 
@@ -32,4 +34,4 @@ const ProductCard = ({
   );
 };
 
-export default ProductCard;
+export default productCard;
