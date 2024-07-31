@@ -1,4 +1,4 @@
- import { FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 type ProductProps = {
   productID: string;
@@ -9,9 +9,9 @@ type ProductProps = {
   handler: () => void;
 };
 
-const server = "any";
+const server = "https://www.myimaginestore.com"; // Replace with your actual server URL
 
-const productCard = ({
+const ProductCard = ({
   productID,
   price,
   name,
@@ -21,12 +21,13 @@ const productCard = ({
 }: ProductProps) => {
   return (
     <div className="pcard">
-      <img src={`${server} / ${photo}`} alt={name} />
+      <img src={`${server}/${photo}`} alt={name} className="product-image" />
+
       <p>{name}</p>
       <span>₹ {price}</span>
 
       <div>
-        <button onClick={() => handler()}>
+        <button onClick={handler}>
           <FaPlus />
         </button>
       </div>
@@ -34,4 +35,4 @@ const productCard = ({
   );
 };
 
-export default productCard;
+export default ProductCard;

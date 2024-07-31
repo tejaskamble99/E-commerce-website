@@ -36,28 +36,28 @@
   }
   
   .pcard {
-    width: 18.75rem;
-    height: 25rem;
-    padding: 1rem;
-    flex: none;
-    @include flex(column, flex-start, center, 4px); // Ensure this mixin is defined in your mixins file
-    position: relative;
-    background-color: white;
-  
-    &:hover > div {
-      opacity: 1;
-    }
-  
-    img {
-      @include square(calc(18.75rem - 3rem)); // Ensure this mixin is defined in your mixins file
-      object-fit: cover;
-      margin: 1rem;
-    }
-  
-    span {
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
+ width: 18.75rem;
+  height: 25rem;
+  padding: 1rem;
+  flex: none;
+  @include flex(column, flex-start, center, 4px);
+  position: relative;
+  background-color: white;
+
+  &:hover > div {
+    opacity: 1;
+  }
+
+  img {
+    @include square(calc(18.75rem - 3rem));
+    object-fit: cover;
+    margin: 1rem;
+  }
+
+  span {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
   
     > div {
       opacity: 0;
