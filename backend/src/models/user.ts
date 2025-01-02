@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import validator from "validator";
 
-interface IUser extends Document {
+// User Interface
+export interface IUser extends Document {
     _id: string;
     name: string;
     email: string;
@@ -11,68 +12,68 @@ interface IUser extends Document {
     dob: Date;
     createdAt: Date;
     updatedAt: Date;
-    //   Virtual Attribute
-    age: number;
-  }
+    readonly age: number; // Virtual attribute
+}
 
+// User Schema
 const schema = new mongoose.Schema(
     {
-    _id : {
-        type: String,
-    requried: [true ,"Enter Id"] },
-
-    name: {
-        type: String,
-        required: [true, "Please enter Name"],
-      },
-      email: {
-        type: String,
-        unique: [true, "Email already Exist"],
-        required: [true, "Please enter Name"],
-        validate: validator.default.isEmail,
-      },
-    
-    photo:{
-        type :String,
-        requried :[true,"Add Photo"]
+        _id: {
+            type: String,
+            required: [true, "Enter Id"],
+        },
+        name: {
+            type: String,
+            required: [true, "Please enter Name"],
+            minlength: [3, "Name must be at least 3 characters"],
+            maxlength: [50, "Name must not exceed 50 characters"],
+        },
+        email: {
+            type: String,
+            unique: [true, "Email already exists"],
+            required: [true, "Please enter Email"],
+            validate: validator.default.isEmail,
+        },
+        photo: {
+            type: String,
+            required: [true, "Add Photo"],
+            minlength: [5, "Photo URL must be at least 5 characters"],
+        },
+        role: {
+            type: String,
+            enum: ["admin", "user"],
+            default: "user",
+        },
+        gender: {
+            type: String,
+            enum: ["male", "female"],
+            required: [true, "Enter gender"],
+        },
+        dob: {
+            type: Date,
+            required: [true, "Enter DOB"],
+        },
     },
-    role:{
-        type :String,
-        enum :["admin","user"],
-        default : "user",
-    },
-    gender:{
-        type :String,
-        enum :["male","female"],
-        required : [true,"enter gender"],
-    },
-    dob:{
-        type :Date,
-        required : [true,"enter gender"],
-        
-    },
-
-},
-
-{
-timestamps:true,
-}
+    {
+        timestamps: true,
+    }
 );
 
+// Virtual Attribute: Age
 schema.virtual("age").get(function () {
     const today = new Date();
     const dob = this.dob;
     let age = today.getFullYear() - dob.getFullYear();
-  
-    if (
-      today.getMonth() < dob.getMonth() ||
-      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
-    ) {
-      age--;
-    }
-  
-    return age;
-  });
-  
 
-export const User = mongoose.model("User", schema);
+    if (
+        today.getMonth() < dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
+    ) {
+        age--;
+    }
+
+    return age;
+});
+
+// User Model
+export const User = mongoose.model<IUser>("User", schema);

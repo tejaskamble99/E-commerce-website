@@ -1,23 +1,27 @@
 import mongoose from "mongoose";
 import validator from "validator";
+// User Schema
 const schema = new mongoose.Schema({
     _id: {
         type: String,
-        requried: [true, "Enter Id"]
+        required: [true, "Enter Id"],
     },
     name: {
         type: String,
         required: [true, "Please enter Name"],
+        minlength: [3, "Name must be at least 3 characters"],
+        maxlength: [50, "Name must not exceed 50 characters"],
     },
     email: {
         type: String,
-        unique: [true, "Email already Exist"],
-        required: [true, "Please enter Name"],
+        unique: [true, "Email already exists"],
+        required: [true, "Please enter Email"],
         validate: validator.default.isEmail,
     },
     photo: {
         type: String,
-        requried: [true, "Add Photo"]
+        required: [true, "Add Photo"],
+        minlength: [5, "Photo URL must be at least 5 characters"],
     },
     role: {
         type: String,
@@ -27,15 +31,16 @@ const schema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ["male", "female"],
-        required: [true, "enter gender"],
+        required: [true, "Enter gender"],
     },
     dob: {
         type: Date,
-        required: [true, "enter gender"],
+        required: [true, "Enter DOB"],
     },
 }, {
     timestamps: true,
 });
+// Virtual Attribute: Age
 schema.virtual("age").get(function () {
     const today = new Date();
     const dob = this.dob;
@@ -46,4 +51,5 @@ schema.virtual("age").get(function () {
     }
     return age;
 });
+// User Model
 export const User = mongoose.model("User", schema);
